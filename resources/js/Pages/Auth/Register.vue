@@ -6,6 +6,10 @@ import BreezeInputError from "@/Components/InputError.vue";
 import BreezeLabel from "@/Components/Label.vue";
 import { Head, Link, useForm } from "@inertiajs/inertia-vue3";
 
+defineProps({
+    errors:Object,
+})
+
 const form = useForm({
     name: "",
     username: "",
@@ -34,11 +38,11 @@ const submit = () => {
                     type="text"
                     class="mt-1 block w-full"
                     v-model="form.name"
-                    required
                     autofocus
                     autocomplete="name"
                 />
-                <BreezeInputError class="mt-2" :message="form.errors.name" />
+                <!-- <BreezeInputError :message="ferrors.name" /> -->
+                <BreezeInputError class="mt-2" :message="errors.name" />
             </div>
 
             <div>
@@ -48,13 +52,13 @@ const submit = () => {
                     type="text"
                     class="mt-1 block w-full"
                     v-model="form.username"
-                    required
+                    
                     autofocus
                     autocomplete="username"
                 />
                 <BreezeInputError
                     class="mt-2"
-                    :message="form.errors.username"
+                    :message="errors.username"
                 />
             </div>
 
@@ -65,10 +69,10 @@ const submit = () => {
                     type="email"
                     class="mt-1 block w-full"
                     v-model="form.email"
-                    required
+                    
                     autocomplete="username"
                 />
-                <BreezeInputError class="mt-2" :message="form.errors.email" />
+                <BreezeInputError class="mt-2" :message="errors.email" />
             </div>
 
             <div class="mt-4">
@@ -78,12 +82,12 @@ const submit = () => {
                     type="password"
                     class="mt-1 block w-full"
                     v-model="form.password"
-                    required
+                    
                     autocomplete="new-password"
                 />
                 <BreezeInputError
                     class="mt-2"
-                    :message="form.errors.password"
+                    :message="errors.password"
                 />
             </div>
 
@@ -96,13 +100,13 @@ const submit = () => {
                     id="password_confirmation"
                     type="password"
                     class="mt-1 block w-full"
-                    v-model="form.password_confirmation"
-                    required
+                    v-model="errors.password_confirmation"
+                    
                     autocomplete="new-password"
                 />
                 <BreezeInputError
                     class="mt-2"
-                    :message="form.errors.password_confirmation"
+                    :message="errors.password_confirmation"
                 />
             </div>
 
