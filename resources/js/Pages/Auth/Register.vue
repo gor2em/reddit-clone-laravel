@@ -100,7 +100,7 @@ const submit = () => {
                     id="password_confirmation"
                     type="password"
                     class="mt-1 block w-full"
-                    v-model="errors.password_confirmation"
+                    v-model="form.password_confirmation"
                     
                     autocomplete="new-password"
                 />
