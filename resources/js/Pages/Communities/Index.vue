@@ -118,7 +118,7 @@ defineProps({
                                                         :href="
                                                             route(
                                                                 'communities.destroy',
-                                                                community.slug
+                                                                community.id
                                                             )
                                                         "
                                                         class="text-red-600 hover:text-red-900"
