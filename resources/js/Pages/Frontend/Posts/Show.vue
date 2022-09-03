@@ -29,43 +29,52 @@ defineProps({
                     </h2>
                 </div>
                 <div class="m-2 p-2 text-sm text-slate-400 bg-white">
-                    <div class="flex justify-between md:flex-row">
+                    <div class="flex flex-col justify-between md:flex-row m-2">
                         <div>
                             Posted by
                             <span class="text-sm ml-1 text-slate-700">{{
                                 post.data.username
                             }}</span>
                         </div>
-                        <div>
-                            <Link class="font-semibold text-blue-400 hover:text-blue-700"
-                                :href=" 
-                                    route('communities.posts.edit', [
-                                        community.slug,
-                                        post.data.slug,
-                                    ])
-                                "
-                            >Edit</Link>
-                                                        <Link class="fonto-semibold text-red-400 hover:text-red-700 ml-2"
+                        <div v-if="$page.props.auth.auth_check && post.data.owner">
+                            <Link
+                                class="font-semibold bg-blue-500 text-white px-4 hover:bg-blue-700 rounded"
                                 :href="
                                     route('communities.posts.edit', [
                                         community.slug,
                                         post.data.slug,
                                     ])
                                 "
-                            >Delete</Link>
+                                >Edit</Link
+                            >
+                            <Link
+                                class="fonto-semibold bg-red-500 text-white px-4 hover:bg-red-700 rounded ml-2"
+                                :href="
+                                    route('communities.posts.destroy', [
+                                        community.slug,
+                                        post.data.slug,
+                                    ])
+                                "
+                                method="delete"
+                                as="button"
+                                type="button"
+                                >Delete</Link
+                            >
                         </div>
                     </div>
-                    <h1 class="font-semibold text-3xl text-black">
-                        {{ post.data.title }}
-                    </h1>
-                    <p class="text-sm text-slate-700">
-                        {{ post.data.description }}
-                    </p>
-                    <a
-                        :href="post.url"
-                        class="font-semibold text-blue-500 hover:text-blue-300 text-sm"
-                        >{{ post.data.url }}</a
-                    >
+                    <div class="p-2">
+                        <h1 class="font-semibold text-3xl text-black">
+                            {{ post.data.title }}
+                        </h1>
+                        <p class="text-sm text-slate-700 my-2">
+                            {{ post.data.description }}
+                        </p>
+                        <a
+                            :href="post.url"
+                            class="font-semibold text-blue-500 hover:text-blue-300 text-sm"
+                            >{{ post.data.url }}</a
+                        >
+                    </div>
                 </div>
             </div>
             <div class="w-full md:w-4/12">

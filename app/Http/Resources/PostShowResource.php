@@ -21,6 +21,8 @@ class PostShowResource extends JsonResource
             'username' => $this->user->username,
             'slug' => $this->slug,
             'url' => $this->url,
+            //post silinirken post sahibini belirlemek.
+            'owner'=> auth()->id() == $this->user_id ? true : false,
         ];
     }
 }

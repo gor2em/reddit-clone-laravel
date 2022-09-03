@@ -18,10 +18,10 @@ class CommunityController extends Controller
     public function index()
     {
         //added paging with selected columns
-        $communities = Community::paginate(5)->through(fn($community)=>[
-            'id'=> $community->id,
-            'name'=> $community->name,
-            'slug'=> $community->slug,
+        $communities = Community::paginate(5)->through(fn ($community) => [
+            'id' => $community->id,
+            'name' => $community->name,
+            'slug' => $community->slug,
         ]);
         return Inertia::render('Communities/Index', compact('communities'));
     }
@@ -45,7 +45,7 @@ class CommunityController extends Controller
     public function store(CommunityStoreRequest $request)
     {
         Community::create($request->validated() + ['user_id' => auth()->id()]);
-        return to_route('communities.index')->with('message','Community created succesfully.');
+        return to_route('communities.index')->with('message', 'Community created succesfully.');
 
         //HandleInertiaRequests dosyasında flash message aktif edildi ve mesajı bu şekilde gösteriyoruz. ->Authenticated.vue
     }
@@ -69,7 +69,7 @@ class CommunityController extends Controller
      */
     public function edit(Community $community)
     {
-        return Inertia::render('Communities/Edit',compact('community'));
+        return Inertia::render('Communities/Edit', compact('community'));
     }
 
     /**
@@ -82,7 +82,7 @@ class CommunityController extends Controller
     public function update(CommunityStoreRequest $request, Community $community)
     {
         $community->update($request->validated());
-        return to_route('communities.index')->with('message','Community updated succesfully.');
+        return to_route('communities.index')->with('message', 'Community updated succesfully.');
     }
 
     /**
@@ -94,6 +94,6 @@ class CommunityController extends Controller
     public function destroy(Community $community)
     {
         $community->delete();
-        return back()->with('message','Community removed succesfully.');
+        return back()->with('message', 'Community removed succesfully.');
     }
 }
