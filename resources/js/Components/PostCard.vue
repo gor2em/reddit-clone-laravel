@@ -29,7 +29,7 @@ defineProps({
             </div>
             <Link
                 :href="
-                    route('frontend.communities.posts.show', [
+                    route('frontend.posts.show', [
                         community,
                         post.slug,
                     ])
@@ -49,7 +49,7 @@ defineProps({
                 <p class="mr-4 p-2">Comments({{ post.comments_count }})</p>
                  <Link
                     :href="
-                        route('frontend.communities.posts.show', [
+                        route('frontend.posts.show', [
                             community,
                             post.slug,
                         ])
