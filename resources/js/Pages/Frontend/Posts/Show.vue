@@ -62,7 +62,10 @@ const submit = () => {
                                 <span class="text-sm ml-1 text-slate-700">{{
                                     post.data.username
                                 }}</span>
+                                <small class="mx-1">{{post.data.created_at}}</small>
+                                
                             </div>
+                            
                             <div
                                 v-if="
                                     $page.props.auth.auth_check
