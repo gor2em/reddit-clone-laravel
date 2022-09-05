@@ -20,7 +20,7 @@
                 <div class="flex">
                   <!-- Logo -->
                   <div class="shrink-0 flex items-center">
-                    <Link :href="route('communities.index')">
+                    <Link :href="route('welcome')">
                       <BreezeApplicationLogo class="block h-9 w-auto" />
                     </Link>
                   </div>
