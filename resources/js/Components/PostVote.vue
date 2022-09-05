@@ -12,7 +12,7 @@ defineProps({
     >
         <UpVote
             :slug="post.slug"
-            :class="{ 'text-blue-600': post.postVotes[0].vote === 1 }"
+            :class="{ 'text-blue-600': post.postVotes[0] && post.postVotes[0].vote === 1 }"
         />
         <span
             class="p-2 my-2 font-bold"
@@ -27,7 +27,7 @@ defineProps({
         </span>
         <DownVote
             :slug="post.slug"
-            :class="{ 'text-red-600': post.postVotes[0].vote === -1 }"
+            :class="{ 'text-red-600': post.postVotes[0] && post.postVotes[0].vote === -1 }"
         />
     </div>
 </template>
