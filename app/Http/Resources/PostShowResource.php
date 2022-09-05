@@ -23,7 +23,9 @@ class PostShowResource extends JsonResource
             'url' => $this->url,
             //post silinirken post sahibini belirlemek.
             'owner' => auth()->id() == $this->user_id ? true : false,
-            'comments' => CommentResource::collection($this->whenLoaded('comments'))
+            'comments' => CommentResource::collection($this->whenLoaded('comments')),
+            'votes' => $this->votes,
+            'postVotes' => $this->whenLoaded('postVotes'),
         ];
     }
 }

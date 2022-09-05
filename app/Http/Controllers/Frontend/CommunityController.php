@@ -14,8 +14,11 @@ class CommunityController extends Controller
         //community
         $community = Community::where('slug', $slug)->firstOrFail();
 
-        //community posts
-        $posts = CommunityPostResource::collection($community->posts()->with('user')->paginate(3));
+        //community posts                                       //auth postvotes
+        $posts = CommunityPostResource::collection($community->posts()->with(['user', 'postVotes' => function ($query) {
+            $query->where('user_id', auth()->id());
+        }])->paginate(3));
+        //kullanıcının yaptığı oylamaayı postvotes fonksiyonu içerisinde sorgu ile çektik. array içerisi 0 ise oylama yapmamış.
 
         return Inertia::render('Frontend/Communities/Show', compact('community', 'posts'));
     }

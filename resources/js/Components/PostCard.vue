@@ -1,6 +1,6 @@
 <script setup>
 import { Link } from "@inertiajs/inertia-vue3";
-// import PostVote from "./PostVote.vue";
+import PostVote from "./PostVote.vue";
 defineProps({
     post: Object,
     community: String,
