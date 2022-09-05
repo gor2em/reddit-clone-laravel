@@ -18,7 +18,7 @@ class CommunityController extends Controller
     public function index()
     {
         //added paging with selected columns
-        $communities = Community::where('user_id',auth()->id())->paginate(5)->through(fn ($community) => [
+        $communities = Community::where('user_id', auth()->id())->paginate(5)->through(fn ($community) => [
             'id' => $community->id,
             'name' => $community->name,
             'slug' => $community->slug,
@@ -69,6 +69,7 @@ class CommunityController extends Controller
      */
     public function edit(Community $community)
     {
+        $this->authorize('update', $community);
         return Inertia::render('Communities/Edit', compact('community'));
     }
 
@@ -81,6 +82,7 @@ class CommunityController extends Controller
      */
     public function update(CommunityStoreRequest $request, Community $community)
     {
+        $this->authorize('update', $community);
         $community->update($request->validated());
         return to_route('communities.index')->with('message', 'Community updated succesfully.');
     }
@@ -93,6 +95,7 @@ class CommunityController extends Controller
      */
     public function destroy(Community $community)
     {
+        $this->authorize('delete', $community);
         $community->delete();
         return back()->with('message', 'Community removed succesfully.');
     }
