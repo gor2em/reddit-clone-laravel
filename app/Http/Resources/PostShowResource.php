@@ -22,7 +22,8 @@ class PostShowResource extends JsonResource
             'slug' => $this->slug,
             'url' => $this->url,
             //post silinirken post sahibini belirlemek.
-            'owner'=> auth()->id() == $this->user_id ? true : false,
+            'owner' => auth()->id() == $this->user_id ? true : false,
+            'comments' => CommentResource::collection($this->whenLoaded('comments'))
         ];
     }
 }

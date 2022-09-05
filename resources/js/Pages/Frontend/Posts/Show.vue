@@ -1,11 +1,27 @@
 <script setup>
-import { Link } from "@inertiajs/inertia-vue3";
+import { Link, useForm } from "@inertiajs/inertia-vue3";
 import GuestLayout from "@/Layouts/Guest.vue";
 
-defineProps({
+const props = defineProps({
     community: Object,
     post: Object,
 });
+
+const form = useForm({
+    content: "",
+});
+
+const submit = () => {
+    form.post(
+        route("frontend.posts.comments", [
+            props.community.slug,
+            props.post.data.slug,
+        ]),
+        {
+            onSuccess: () => form.reset("content"),
+        }
+    );
+};
 </script>
 
 <template>
@@ -36,7 +52,11 @@ defineProps({
                                 post.data.username
                             }}</span>
                         </div>
-                        <div v-if="$page.props.auth.auth_check && post.data.owner">
+                        <div
+                            v-if="
+                                $page.props.auth.auth_check && post.data.owner
+                            "
+                        >
                             <Link
                                 class="font-semibold bg-blue-500 text-white px-4 hover:bg-blue-700 rounded"
                                 :href="
@@ -74,6 +94,52 @@ defineProps({
                             class="font-semibold text-blue-500 hover:text-blue-300 text-sm"
                             >{{ post.data.url }}</a
                         >
+                    </div>
+                    <hr />
+                    <div v-if="$page.props.auth.auth_check">
+                        <form class="m-2 p-2 max-w-md" @submit.prevent="submit">
+                            <div class="mt-2">
+                                <label
+                                    for="comment"
+                                    class="block mb-2 text-sm font-medium text-gray-900"
+                                    >Your Comment</label
+                                >
+                                <textarea
+                                    v-model="form.content"
+                                    id="comment"
+                                    rows="4"
+                                    class="bolck p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-400"
+                                ></textarea>
+                            </div>
+                            <div class="mt-2">
+                                <button
+                                    class="px-4 py-2 bg-blue-500 hover:bg-blue-700 text-white rounded-md"
+                                >
+                                    Comment
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                    <hr />
+                    <div>
+                        <ul
+                            role="list"
+                            class="divide-y divide-gray-200 m-2 p-2"
+                        >
+                            <li
+                                class="py-4 flex flex-col"
+                                v-for="(comment, index) in post.data.comments"
+                                :key="index"
+                            >
+                                <div class="text-sm">
+                                    Commented by<span
+                                        class="font-semibold ml-1 text-black"
+                                        >{{ comment.username }}</span
+                                    >
+                                </div>
+                                <div>{{ comment.content }}</div>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
