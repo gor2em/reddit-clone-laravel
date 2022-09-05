@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\CommunityPostResource;
+use App\Http\Resources\CommunityResource;
 use App\Models\Community;
 use Inertia\Inertia;
 
@@ -20,6 +21,8 @@ class CommunityController extends Controller
         }])->withCount('comments')->paginate(3));
         //kullanıcının yaptığı oylamaayı postvotes fonksiyonu içerisinde sorgu ile çektik. array içerisi 0 ise oylama yapmamış.
 
-        return Inertia::render('Frontend/Communities/Show', compact('community', 'posts'));
+        $communities = CommunityResource::collection(Community::withCount('posts')->latest()->take(4)->get());
+
+        return Inertia::render('Frontend/Communities/Show', compact('community', 'posts', 'communities'));
     }
 }

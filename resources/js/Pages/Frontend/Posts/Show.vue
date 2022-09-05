@@ -2,10 +2,14 @@
 import { Link, useForm } from "@inertiajs/inertia-vue3";
 import GuestLayout from "@/Layouts/Guest.vue";
 import PostVote from "@/Components/PostVote.vue";
+import PostList from "@/Components/PostList.vue";
 
 const props = defineProps({
     community: Object,
     post: Object,
+    posts: Object,
+    can_delete: Boolean,
+    can_update: Boolean,
 });
 
 const form = useForm({
@@ -47,7 +51,7 @@ const submit = () => {
                 </div>
                 <div class="flex m-2 p-2 text-sm text-slate-400 bg-white">
                     <div>
-                        <PostVote :post="post.data"/>
+                        <PostVote :post="post.data" />
                     </div>
                     <div class="w-full">
                         <div
@@ -61,11 +65,12 @@ const submit = () => {
                             </div>
                             <div
                                 v-if="
-                                    $page.props.auth.auth_check &&
-                                    post.data.owner
+                                    $page.props.auth.auth_check
+                                    // &&  post.data.owner
                                 "
                             >
                                 <Link
+                                    v-if="can_update"
                                     class="font-semibold bg-blue-500 text-white px-4 hover:bg-blue-700 rounded"
                                     :href="
                                         route('communities.posts.edit', [
@@ -76,6 +81,7 @@ const submit = () => {
                                     >Edit</Link
                                 >
                                 <Link
+                                    v-if="can_delete"
                                     class="fonto-semibold bg-red-500 text-white px-4 hover:bg-red-700 rounded ml-2"
                                     :href="
                                         route('communities.posts.destroy', [
@@ -157,8 +163,10 @@ const submit = () => {
                 </div>
             </div>
             <div class="w-full md:w-4/12">
-                <div class="bg-slate-600 text-white">
-                    <h2>Latest Communities</h2>
+                <div class="">
+                    <PostList :posts="posts.data" :community="community">
+                        <template #title>Latest Posts</template>
+                    </PostList>
                 </div>
             </div>
         </section>

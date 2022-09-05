@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class PostShowResource extends JsonResource
+class PostResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,15 +17,8 @@ class PostShowResource extends JsonResource
         return [
             'id' => $this->id,
             'title' => $this->title,
-            'description' => $this->description,
-            'username' => $this->user->username,
             'slug' => $this->slug,
-            'url' => $this->url,
-            //post silinirken post sahibini belirlemek.
-            // 'owner' => auth()->id() == $this->user_id ? true : false,
-            'comments' => CommentResource::collection($this->whenLoaded('comments')),
             'votes' => $this->votes,
-            'postVotes' => $this->whenLoaded('postVotes'),
         ];
     }
 }
