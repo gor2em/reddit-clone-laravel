@@ -12,7 +12,7 @@ class CommunityController extends Controller
     public function show($slug)
     {
         //community
-        $community = Community::where('slug', $slug)->first();
+        $community = Community::where('slug', $slug)->firstOrFail();
 
         //community posts
         $posts = CommunityPostResource::collection($community->posts()->with('user')->paginate(3));
